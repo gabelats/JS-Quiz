@@ -100,3 +100,5 @@ You are required to submit BOTH of the following for review:
 Using the student miniproject as a reference.
 screenShot
 ![Alt text](<Screenshot 2023-12-03 124714.png>)
+deployed
+https://gabelats.github.io/js-quiz/
