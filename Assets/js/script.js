@@ -1,38 +1,41 @@
 //VARIABLE DECLORATION
 var startButton = document.querySelector(".start-button");
 var timerClass = document.querySelector(".timer-count");
-var resetButton = document.querySelector("#reset-button");
+//
 var questionStar = document.querySelector("#question");
+var answerDiv = document.querySelector(".answers");
 var questionArr = [
   {
-    question: "question one",
-    choices: ["answer 1", "answer 2", "answer 3"],
-    answer: "answer 2",
+    question: "What is a boolean",
+    choices: ["a true or false statement ", "a number", "a list of words"],
+    answer: "a true or false statement ",
   },
   {
-    question: "question two",
-    choices: ["answer 1", "answer 2", "answer 3"],
-    answer: "answer 2",
+    question: "what is a string ",
+    choices: ["an integer", "a true or false statement", "textual data"],
+    answer: "textual data",
   },
   {
-    question: "question three",
-    choices: ["answer 1", "answer 2", "answer 3"],
-    answer: "answer 2",
+    question: "what data type is this, 0",
+    choices: [, "boolean", "srting", "integer"],
+    answer: "integer",
   },
   {
-    question: "question four",
-    choices: ["answer 1", "answer 2", "answer 3"],
-    answer: "answer 2",
+    question: "what do these {} represent in js",
+    choices: ["Array", "Object", "function"],
+    answer: "Object",
   },
 ];
 var qArrIndex = 0;
 var answers = [];
-var stats = [(correctAnswers = 0), (wrongAnswers = 0)];
+var correctAnswers = 0;
+var wrongAnswers = 0;
+// var stats = [{ correctAnswers, wrongAnswers }];
 var timer;
 var timerCount;
 //Functions
 function startQuiz() {
-  timerCount = 10;
+  timerCount = 25;
   startButton.disabled = true;
   startTimer();
   displayQuestion();
@@ -48,8 +51,7 @@ function startTimer() {
 }
 function displayQuestion() {
   questionStar.textContent = questionArr[qArrIndex].question;
-  console.log(questionStar);
-  var answerDiv = document.querySelector(".answers");
+  // console.log(questionStar);
   let choiceItems = "";
   var choices = questionArr[qArrIndex].choices;
   for (var i = 0; i < choices.length; i++) {
@@ -58,6 +60,43 @@ function displayQuestion() {
   }
 }
 
+function checkChoice(clickChoice) {
+  var userChoice = clickChoice.textContent;
+  var correctChoice = questionArr[qArrIndex].answer;
+  console.log(userChoice, correctChoice);
+  if (userChoice === correctChoice) {
+    correctAnswers += 1;
+  } else {
+    wrongAnswers += 1;
+    timerCount -= 3;
+  }
+  qArrIndex++;
+  if (questionArr.length > qArrIndex) {
+    displayQuestion();
+  } else {
+    clearInterval(timer);
+    endScreen();
+  }
+}
+function endScreen() {
+  var quizEnd = (document.querySelector(".quiz-end").textContent =
+    "End of quiz");
+  var stats = (document.querySelector("#score").textContent = correctAnswers);
+  var displ = (document.querySelector("#sent").textContent =
+    "Answered correcly");
+  var resetButton = (document.querySelector("#reset-button").textContent =
+    "Reset");
+  localStorage.setItem("Correct answers", correctAnswers);
+  localStorage.setItem("Wrong answers", wrongAnswers);
+}
 //Event listeners
 startButton.addEventListener("click", startQuiz);
-// startButton.addEventListener("click");
+answerDiv.addEventListener("click", function (event) {
+  console.log("clicked");
+  event.preventDefault();
+  const clickChoice = event.target;
+  if (clickChoice.matches("li")) {
+    checkChoice(clickChoice);
+  }
+});
+resetButton.addEventListener("click");

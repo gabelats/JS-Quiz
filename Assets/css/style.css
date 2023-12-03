@@ -16,3 +16,6 @@ body {
   padding: 10px;
   box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.8);
 }
+.answers li:hover {
+  cursor: pointer;
+}
